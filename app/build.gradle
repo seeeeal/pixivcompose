@@ -50,9 +50,8 @@ android {
 }
 
 ktfmt {
-    // Google style - 2 space indentation
     googleStyle()
-    // Whether ktfmt should remove imports that are not used.
+    maxWidth.set(120)
     removeUnusedImports.set(true)
 }
 
@@ -93,6 +92,11 @@ dependencies {
 
     // imageLoader
     implementation "io.coil-kt:coil:$coli_version"
+    implementation "io.coil-kt:coil-compose:$coli_version"
+    implementation "io.coil-kt:coil-gif:$coli_version"
+
+    //Timber
+    implementation "com.jakewharton.timber:timber:$timber_version"
 
     testImplementation "junit:junit:$junit_version"
     androidTestImplementation "androidx.test.ext:junit:$androidx_junit_version"
