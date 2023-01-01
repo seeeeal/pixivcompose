@@ -5,7 +5,7 @@ import android.os.Build
 import coil.ImageLoader
 import coil.decode.GifDecoder
 import coil.decode.ImageDecoderDecoder
-import com.compose.pixivcompose.network.PixivService
+import com.compose.pixivcompose.network.request.PixivService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

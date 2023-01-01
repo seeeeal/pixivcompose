@@ -1,4 +1,4 @@
-package com.compose.pixivcompose.network
+package com.compose.pixivcompose.network.request
 
 enum class RequestState {
   LOADING,

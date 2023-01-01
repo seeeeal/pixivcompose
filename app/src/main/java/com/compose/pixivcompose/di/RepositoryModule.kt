@@ -1,7 +1,7 @@
 package com.compose.pixivcompose.di
 
-import com.compose.pixivcompose.network.PixivService
-import com.compose.pixivcompose.ui.module.main.PixivRepository
+import com.compose.pixivcompose.network.request.PixivService
+import com.compose.pixivcompose.ui.module.PixivRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

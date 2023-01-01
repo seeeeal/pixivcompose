@@ -1,8 +1,7 @@
-package com.compose.pixivcompose.ui.module.main
+package com.compose.pixivcompose.ui.module
 
-import android.util.Log
 import androidx.annotation.WorkerThread
-import com.compose.pixivcompose.network.PixivService
+import com.compose.pixivcompose.network.request.PixivService
 import javax.inject.Inject
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.flow
@@ -19,7 +18,7 @@ class PixivRepository @Inject constructor(private val pixivService: PixivService
         try {
           val response = pixivService.fetchRandomPics()
           if (response.isSuccessful) {
-            emit(response.body()?.data)
+            emit(response.body()?.data ?: mutableListOf())
           } else {
             onError.invoke(response.message())
           }

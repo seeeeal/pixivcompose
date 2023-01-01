@@ -1,11 +1,11 @@
 package com.compose.pixivcompose.ui.module.main
 
-import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.State
-import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.*
 import androidx.lifecycle.ViewModel
 import coil.ImageLoader
-import com.compose.pixivcompose.network.RequestState
+import com.compose.pixivcompose.network.request.RequestState
+import com.compose.pixivcompose.network.response.ResponsePicBean
+import com.compose.pixivcompose.ui.module.PixivRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import kotlinx.coroutines.flow.Flow
@@ -17,7 +17,7 @@ class MainViewModel @Inject constructor(val imageLoader: ImageLoader, pixivRepos
   val requestState: State<RequestState>
     get() = _requestState
 
-  val randomPicsList: Flow<List<Any>?> =
+  val randomPicsList: Flow<MutableList<ResponsePicBean>> =
     pixivRepository.fetchRandomPics(
       onStart = { _requestState.value = RequestState.LOADING },
       onCompletion = { _requestState.value = RequestState.SUCCESS },

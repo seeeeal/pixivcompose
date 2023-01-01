@@ -1,4 +1,4 @@
-package com.compose.pixivcompose.network
+package com.compose.pixivcompose.network.response
 
 import com.google.gson.annotations.SerializedName
 

@@ -17,6 +17,7 @@ buildscript {
         coroutines_version = '1.6.4'
 
         coli_version = '2.2.2'
+        landscapist_version = '2.1.0'
 
         junit_version = '4.13.2'
         androidx_junit_version = '1.1.4'
