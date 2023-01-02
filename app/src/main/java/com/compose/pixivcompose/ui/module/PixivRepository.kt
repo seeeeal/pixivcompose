@@ -18,7 +18,7 @@ class PixivRepository @Inject constructor(private val pixivService: PixivService
         try {
           val response = pixivService.fetchRandomPics()
           if (response.isSuccessful) {
-            emit(response.body()?.data ?: mutableListOf())
+            emit(response.body()?.data ?: listOf())
           } else {
             onError.invoke(response.message())
           }

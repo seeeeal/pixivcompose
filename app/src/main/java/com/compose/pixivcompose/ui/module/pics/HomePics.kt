@@ -16,6 +16,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Shadow
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
@@ -35,7 +36,6 @@ fun HomePics(
   onClickPic: (Long) -> Unit,
   onClickRefresh: () -> Unit
 ) {
-
   Box(modifier = modifier) {
     LazyVerticalStaggeredGrid(
       modifier = Modifier.fillMaxWidth().fillMaxHeight(),
@@ -111,7 +111,12 @@ fun PicItem(modifier: Modifier = Modifier, item: ResponsePicBean) {
   val finalPicHeightDp: Dp = with(LocalDensity.current) { finalPicHeightPx.toDp() }
 
   Box(modifier = modifier.width(itemWidthDp.dp).height(finalPicHeightDp)) {
-    AsyncImage(modifier = Modifier.clip(RoundedCornerShape(4)), model = item.urls.original, contentDescription = null)
+    AsyncImage(
+      modifier = Modifier.fillMaxWidth().fillMaxHeight().clip(RoundedCornerShape(4)),
+      model = item.urls.small,
+      contentDescription = null,
+      contentScale = ContentScale.Crop
+    )
     Text(
       modifier = Modifier.align(Alignment.BottomEnd).padding(12.dp, 6.dp),
       text = "${item.width} x ${item.height}",

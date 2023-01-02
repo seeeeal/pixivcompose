@@ -18,8 +18,10 @@ import com.compose.pixivcompose.ui.module.main.MainViewModel
 @Composable
 fun HomeScreen(viewModel: MainViewModel, onClickPic: (Long) -> Unit) {
 
-  val pics: MutableList<ResponsePicBean> by viewModel.randomPicsList.collectAsState(initial = mutableListOf())
   val isLoading: RequestState by viewModel.requestState
+  val randomPics: List<ResponsePicBean> by viewModel.randomPics.collectAsState()
+
+  LaunchedEffect(true) { viewModel.fetchRandomPics() }
 
   ConstraintLayout {
     val (body, loading) = createRefs()
@@ -29,7 +31,13 @@ fun HomeScreen(viewModel: MainViewModel, onClickPic: (Long) -> Unit) {
       topBar = { HomeAppBar() }
     ) { innerPadding ->
       val modifier = Modifier.padding(innerPadding)
-      HomePics(modifier = modifier, pics = pics, onClickPic = onClickPic, onClickRefresh = {})
+
+      HomePics(
+        modifier = modifier,
+        pics = randomPics,
+        onClickPic = onClickPic,
+        onClickRefresh = { viewModel.fetchRandomPics() }
+      )
 
       when (isLoading) {
         RequestState.LOADING -> {

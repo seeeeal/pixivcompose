@@ -12,6 +12,7 @@ interface PixivService {
   suspend fun fetchRandomPics(
     @Query("r18") r18: Boolean = false,
     @Query("num") num: Int = 20,
-    @Query("excludeAI") excludeAI: Boolean = false
-  ): Response<ApiResponse<MutableList<ResponsePicBean>>>
+    @Query("excludeAI") excludeAI: Boolean = false,
+    @Query("size") size: Array<String> = arrayOf("original", "regular", "small")
+  ): Response<ApiResponse<List<ResponsePicBean>>>
 }
