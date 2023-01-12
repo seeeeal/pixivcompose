@@ -5,12 +5,11 @@ import androidx.compose.animation.core.tween
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.*
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
-import com.compose.pixivcompose.ui.module.pics.HomeScreen
+import com.compose.pixivcompose.ui.module.pic.PicDetail
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 
 @Composable
@@ -28,7 +27,10 @@ fun PixivRootScreen() {
 
   NavHost(navController = navController, startDestination = NavScreen.Home.route) {
     composable(NavScreen.Home.route) {
-      HomeScreen(viewModel = hiltViewModel(), onClickPic = {})
+      HomeScreen(
+        viewModel = hiltViewModel(),
+        onClickPic = { navController.navigate("${NavScreen.PicDetail.route}?${NavScreen.PicDetail.argumentUrl}=$it") }
+      )
 
       LaunchedEffect(Unit) {
         statusBarColor = colors.secondary
@@ -37,13 +39,15 @@ fun PixivRootScreen() {
     }
     composable(
       route = NavScreen.PicDetail.routeWithArgument,
-      arguments = listOf(navArgument(NavScreen.PicDetail.argumentPid) { type = NavType.LongType })
+      arguments = listOf(navArgument(NavScreen.PicDetail.argumentUrl) { defaultValue = "" })
     ) { backStackEntry ->
-      // val pid = backStackEntry.arguments?.getLong(NavScreen.PicDetail.argumentPid) ?:
-      // return@composable
-      //            PicDetail(pid = pid, viewModel = hiltViewModel()) {
-      //                navController.navigateUp()
-      //            }
+      val url = backStackEntry.arguments?.getString(NavScreen.PicDetail.argumentUrl) ?: ""
+      PicDetail(url = url, viewModel = hiltViewModel()) { navController.navigateUp() }
+
+      LaunchedEffect(Unit) {
+        statusBarColor = colors.secondary
+        navigationBarColor = colors.secondary
+      }
     }
   }
 
@@ -59,8 +63,8 @@ sealed class NavScreen(val route: String) {
 
   object PicDetail : NavScreen("pic_detail") {
 
-    const val routeWithArgument: String = "pic_detail/{pid}"
+    const val routeWithArgument: String = "pic_detail?url={url}"
 
-    const val argumentPid: String = "pid"
+    const val argumentUrl: String = "url"
   }
 }

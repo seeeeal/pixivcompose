@@ -5,7 +5,6 @@ import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import coil.ImageLoader
 import com.compose.pixivcompose.network.request.RequestState
 import com.compose.pixivcompose.network.response.ResponsePicBean
 import com.compose.pixivcompose.ui.module.PixivRepository
@@ -17,8 +16,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
 @HiltViewModel
-class MainViewModel @Inject constructor(val imageLoader: ImageLoader, val pixivRepository: PixivRepository) :
-  ViewModel() {
+class MainViewModel @Inject constructor(val pixivRepository: PixivRepository) : ViewModel() {
 
   private val _requestState: MutableState<RequestState> = mutableStateOf(RequestState.LOADING)
   val requestState: State<RequestState>

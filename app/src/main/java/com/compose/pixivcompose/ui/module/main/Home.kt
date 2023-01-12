@@ -1,4 +1,4 @@
-package com.compose.pixivcompose.ui.module.pics
+package com.compose.pixivcompose.ui.module.main
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
@@ -12,16 +12,20 @@ import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
 import com.compose.pixivcompose.network.request.RequestState
 import com.compose.pixivcompose.network.response.ResponsePicBean
-import com.compose.pixivcompose.ui.module.main.MainViewModel
+import com.compose.pixivcompose.ui.module.pics.HomePics
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun HomeScreen(viewModel: MainViewModel, onClickPic: (Long) -> Unit) {
+fun HomeScreen(viewModel: MainViewModel, onClickPic: (String) -> Unit) {
 
   val isLoading: RequestState by viewModel.requestState
   val randomPics: List<ResponsePicBean> by viewModel.randomPics.collectAsState()
 
-  LaunchedEffect(true) { viewModel.fetchRandomPics() }
+  LaunchedEffect(true) {
+    if (randomPics.isEmpty()) {
+      viewModel.fetchRandomPics()
+    }
+  }
 
   ConstraintLayout {
     val (body, loading) = createRefs()
@@ -38,22 +42,24 @@ fun HomeScreen(viewModel: MainViewModel, onClickPic: (Long) -> Unit) {
         onClickPic = onClickPic,
         onClickRefresh = { viewModel.fetchRandomPics() }
       )
+    }
 
-      when (isLoading) {
-        RequestState.LOADING -> {
-          CircularProgressIndicator(
-            modifier =
-              Modifier.constrainAs(loading) {
-                top.linkTo(parent.top)
-                bottom.linkTo(parent.bottom)
-                start.linkTo(parent.start)
-                end.linkTo(parent.end)
-              }
-          )
-        }
-        RequestState.SUCCESS -> {}
-        RequestState.FAILED -> {}
+    when (isLoading) {
+      RequestState.LOADING -> {
+        CircularProgressIndicator(
+          modifier =
+            Modifier.constrainAs(loading) {
+              top.linkTo(parent.top)
+              bottom.linkTo(parent.bottom)
+              start.linkTo(parent.start)
+              end.linkTo(parent.end)
+            },
+          color = MaterialTheme.colorScheme.surface,
+          strokeWidth = 4.dp
+        )
       }
+      RequestState.SUCCESS -> {}
+      RequestState.FAILED -> {}
     }
   }
 }
