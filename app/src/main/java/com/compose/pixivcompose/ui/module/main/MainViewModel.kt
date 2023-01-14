@@ -6,7 +6,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.compose.pixivcompose.network.request.RequestState
-import com.compose.pixivcompose.network.response.ResponsePicBean
+import com.compose.pixivcompose.network.response.ResponseImgBean
 import com.compose.pixivcompose.ui.module.PixivRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
@@ -22,18 +22,18 @@ class MainViewModel @Inject constructor(val pixivRepository: PixivRepository) : 
   val requestState: State<RequestState>
     get() = _requestState
 
-  private val _randomPics = MutableStateFlow(listOf<ResponsePicBean>())
-  val randomPics: StateFlow<List<ResponsePicBean>> = _randomPics.asStateFlow()
+  private val _randomImages = MutableStateFlow(listOf<ResponseImgBean>())
+  val randomImages: StateFlow<List<ResponseImgBean>> = _randomImages.asStateFlow()
 
-  fun fetchRandomPics() {
+  fun fetchRandomImages() {
     viewModelScope.launch {
       pixivRepository
-        .fetchRandomPics(
+        .fetchRandomImages(
           onStart = { _requestState.value = RequestState.LOADING },
           onCompletion = { _requestState.value = RequestState.SUCCESS },
           onError = { _requestState.value = RequestState.FAILED }
         )
-        .collect { _randomPics.value = it }
+        .collect { _randomImages.value = it }
     }
   }
 }

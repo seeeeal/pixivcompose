@@ -13,10 +13,10 @@ import timber.log.Timber
 class PixivRepository @Inject constructor(private val pixivService: PixivService) {
 
   @WorkerThread
-  fun fetchRandomPics(onStart: () -> Unit, onCompletion: () -> Unit, onError: (String) -> Unit) =
+  fun fetchRandomImages(onStart: () -> Unit, onCompletion: () -> Unit, onError: (String) -> Unit) =
     flow {
         try {
-          val response = pixivService.fetchRandomPics()
+          val response = pixivService.fetchRandomImages()
           if (response.isSuccessful) {
             emit(response.body()?.data ?: listOf())
           } else {

@@ -11,19 +11,19 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
 import com.compose.pixivcompose.network.request.RequestState
-import com.compose.pixivcompose.network.response.ResponsePicBean
-import com.compose.pixivcompose.ui.module.pics.HomePics
+import com.compose.pixivcompose.network.response.ResponseImgBean
+import com.compose.pixivcompose.ui.module.images.HomeImages
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun HomeScreen(viewModel: MainViewModel, onClickPic: (String) -> Unit) {
+fun HomeScreen(viewModel: MainViewModel, onClickImg: (String) -> Unit) {
 
   val isLoading: RequestState by viewModel.requestState
-  val randomPics: List<ResponsePicBean> by viewModel.randomPics.collectAsState()
+  val randomImages: List<ResponseImgBean> by viewModel.randomImages.collectAsState()
 
   LaunchedEffect(true) {
-    if (randomPics.isEmpty()) {
-      viewModel.fetchRandomPics()
+    if (randomImages.isEmpty()) {
+      viewModel.fetchRandomImages()
     }
   }
 
@@ -36,11 +36,11 @@ fun HomeScreen(viewModel: MainViewModel, onClickPic: (String) -> Unit) {
     ) { innerPadding ->
       val modifier = Modifier.padding(innerPadding)
 
-      HomePics(
+      HomeImages(
         modifier = modifier,
-        pics = randomPics,
-        onClickPic = onClickPic,
-        onClickRefresh = { viewModel.fetchRandomPics() }
+        images = randomImages,
+        onClickImg = onClickImg,
+        onClickRefresh = { viewModel.fetchRandomImages() }
       )
     }
 

@@ -1,4 +1,4 @@
-package com.compose.pixivcompose.ui.module.pics
+package com.compose.pixivcompose.ui.module.images
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
@@ -29,14 +29,14 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.SubcomposeAsyncImage
 import com.compose.pixivcompose.R
-import com.compose.pixivcompose.network.response.ResponsePicBean
+import com.compose.pixivcompose.network.response.ResponseImgBean
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun HomePics(
+fun HomeImages(
   modifier: Modifier = Modifier,
-  pics: List<ResponsePicBean>,
-  onClickPic: (String) -> Unit,
+  images: List<ResponseImgBean>,
+  onClickImg: (String) -> Unit,
   onClickRefresh: () -> Unit
 ) {
   Box(modifier = modifier) {
@@ -47,7 +47,7 @@ fun HomePics(
       verticalArrangement = Arrangement.spacedBy(4.dp),
       horizontalArrangement = Arrangement.spacedBy(4.dp)
     ) {
-      items(pics) { PicItem(item = it, onClickPic = onClickPic) }
+      items(images) { ImgItem(item = it, onClickImg = onClickImg) }
     }
 
     FloatingActionButton(
@@ -65,59 +65,59 @@ fun HomePics(
 }
 
 @Composable
-fun PicItem(modifier: Modifier = Modifier, item: ResponsePicBean, onClickPic: (String) -> Unit) {
+fun ImgItem(modifier: Modifier = Modifier, item: ResponseImgBean, onClickImg: (String) -> Unit) {
   val configuration = LocalConfiguration.current
-  val picWidth = item.width.toFloat()
-  val picHeight = item.height.toFloat()
+  val imgWidth = item.width.toFloat()
+  val imgHeight = item.height.toFloat()
   val itemWidthDp = (configuration.screenWidthDp / 2) - 8
   val itemWidthPx = with(LocalDensity.current) { itemWidthDp.dp.toPx() }
-  val finalPicHeightPx: Float
+  val finalImgHeightPx: Float
 
   when {
-    picWidth > picHeight -> {
-      finalPicHeightPx =
+    imgWidth > imgHeight -> {
+      finalImgHeightPx =
         when {
-          picWidth != itemWidthPx -> {
-            val scale = itemWidthPx / picWidth
-            if (picHeight * scale < itemWidthPx / 3) itemWidthPx / 3 else picHeight * scale
+          imgWidth != itemWidthPx -> {
+            val scale = itemWidthPx / imgWidth
+            if (imgHeight * scale < itemWidthPx / 3) itemWidthPx / 3 else imgHeight * scale
           }
           else -> {
-            if (picHeight < itemWidthPx / 3) itemWidthPx / 3 else picHeight
+            if (imgHeight < itemWidthPx / 3) itemWidthPx / 3 else imgHeight
           }
         }
     }
-    picHeight > picWidth -> {
-      finalPicHeightPx =
+    imgHeight > imgWidth -> {
+      finalImgHeightPx =
         when {
-          picWidth != itemWidthPx -> {
-            val scale = itemWidthPx / picWidth
-            if (picHeight * scale > 2 * itemWidthPx) 2 * itemWidthPx else picHeight * scale
+          imgWidth != itemWidthPx -> {
+            val scale = itemWidthPx / imgWidth
+            if (imgHeight * scale > 2 * itemWidthPx) 2 * itemWidthPx else imgHeight * scale
           }
           else -> {
-            if (picHeight > 2 * itemWidthPx) 2 * itemWidthPx else picHeight
+            if (imgHeight > 2 * itemWidthPx) 2 * itemWidthPx else imgHeight
           }
         }
     }
     else -> {
-      finalPicHeightPx = itemWidthPx
+      finalImgHeightPx = itemWidthPx
     }
   }
 
-  val finalPicHeightDp: Dp = with(LocalDensity.current) { finalPicHeightPx.toDp() }
+  val finalImgHeightDp: Dp = with(LocalDensity.current) { finalImgHeightPx.toDp() }
 
   Box(
     modifier =
-      modifier.width(itemWidthDp.dp).height(finalPicHeightDp).clickable {
+      modifier.width(itemWidthDp.dp).height(finalImgHeightDp).clickable {
         if (!item.urls.original.isNullOrEmpty()) {
-          onClickPic.invoke(item.urls.original)
+          onClickImg.invoke(item.urls.original)
         }
       }
   ) {
     SubcomposeAsyncImage(
       modifier = Modifier.fillMaxWidth().fillMaxHeight().clip(RoundedCornerShape(4)),
       model = item.urls.small,
-      loading = { PicStateHint("Loading...") },
-      error = { PicStateHint("Error...") },
+      loading = { ImgStateHint("Loading...") },
+      error = { ImgStateHint("Error...") },
       contentDescription = null,
       contentScale = ContentScale.Crop
     )
@@ -140,7 +140,7 @@ fun PicItem(modifier: Modifier = Modifier, item: ResponsePicBean, onClickPic: (S
 }
 
 @Composable
-fun PicStateHint(hint: String) {
+fun ImgStateHint(hint: String) {
   Box(modifier = Modifier.fillMaxWidth().fillMaxHeight().background(MaterialTheme.colorScheme.surface)) {
     Text(
       modifier = Modifier.align(Alignment.Center),

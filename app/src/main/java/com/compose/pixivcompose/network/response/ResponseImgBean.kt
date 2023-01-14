@@ -2,7 +2,7 @@ package com.compose.pixivcompose.network.response
 
 import com.google.gson.annotations.SerializedName
 
-data class ResponsePicBean(
+data class ResponseImgBean(
   @SerializedName("aiType") val aiType: Int,
   @SerializedName("author") val author: String,
   @SerializedName("ext") val ext: String,
