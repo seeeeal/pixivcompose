@@ -18,7 +18,7 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/Theme.Pixivcompose"
-        tools:targetApi="31">
+        tools:targetApi="33">
         <activity
             android:name=".ui.module.main.MainActivity"
             android:exported="true"
