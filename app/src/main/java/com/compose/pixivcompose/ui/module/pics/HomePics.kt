@@ -116,8 +116,8 @@ fun PicItem(modifier: Modifier = Modifier, item: ResponsePicBean, onClickPic: (S
     SubcomposeAsyncImage(
       modifier = Modifier.fillMaxWidth().fillMaxHeight().clip(RoundedCornerShape(4)),
       model = item.urls.small,
-      loading = { PicStateHint("加载中...") },
-      error = { PicStateHint("加载失败") },
+      loading = { PicStateHint("Loading...") },
+      error = { PicStateHint("Error...") },
       contentDescription = null,
       contentScale = ContentScale.Crop
     )

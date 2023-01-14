@@ -42,7 +42,7 @@ fun PixivRootScreen() {
       arguments = listOf(navArgument(NavScreen.PicDetail.argumentUrl) { defaultValue = "" })
     ) { backStackEntry ->
       val url = backStackEntry.arguments?.getString(NavScreen.PicDetail.argumentUrl) ?: ""
-      PicDetail(url = url, viewModel = hiltViewModel()) { navController.navigateUp() }
+      PicDetail(url = url) { navController.navigateUp() }
 
       LaunchedEffect(Unit) {
         statusBarColor = colors.secondary
