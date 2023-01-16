@@ -7,6 +7,7 @@
 <p align="center">
   <a href=""><img alt="API" src="https://img.shields.io/badge/API-26+-%2335F3FFFF"/></a> 
   <a href=""><img alt="State" src="https://img.shields.io/badge/State-Beta-%91351AFFFF"/></a> 
+  <a href=""><img alt="State" src="https://img.shields.io/badge/UI-Compose-red"/></a> 
 </p>
 
 ---
