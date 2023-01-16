@@ -4,6 +4,11 @@
     <p>An Android application to get random images form pixiv</p>
 </div>
 
+<p align="center">
+  <a href=""><img alt="API" src="https://img.shields.io/badge/API-26+-%2335F3FFFF"/></a> 
+  <a href=""><img alt="State" src="https://img.shields.io/badge/State-Beta-%91351AFFFF"/></a> 
+</p>
+
 ---
 
 <p align="center">
